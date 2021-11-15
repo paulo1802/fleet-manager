@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/starter-template/">
+
+  <title>Gerenciador de frota</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/css-home.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="icon" type="imagem/png" href="images/logo-onibus.jpeg" />
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top barra-de-cima">
+    <div class="container">
+      <div class="navbar-header">
+
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" style="color: white;">Gerenciador de Frota</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav" style="color: white;">
+          <li class="active"><a style="background-color: #337ab7; color: white;" href="/home">Visão Geral da Frota</a></li>
+          <li><a href="/OS" style="color: white;">Ordens de Serviço</a></li>
+          <li><a href="/kanban" style="color: white;">Quadro Kanban</a></li>
+          <li><a href="/sobre" style="color: white;">Sobre</a></li>
+          <li><a href="/" style="color: white;">Sair</a></li>
+
+
+
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </nav>
+  <section id="section1">
+
+
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+
+        <h1 class="display-4">Ordens de Serviço</h1>
+        <p class="lead">Nesse espaço você pode criar, editar e verificar o andamento de uma OS.</p>
+      </div>
+    </div>
+    
+
+   </section>
+    <form action="/OS" method="POST" align="center">
+      <label for="newItem">ID do Ônibus</label>  
+      <input type="text" name="newItem" id="">
+    
+    
+      
+      <br /> <br />  <br>
+    
+      <button type="submit"  class="btn btn-primary" align= "center">+ Adicionar OS</button>
+      <br /> <br />
+    </form>
+    
+    <div class="container">
+      <input class="form-control" id="myInput" type="text" placeholder="Procure por uma OS">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" width=150>Número da OS</th>
+            <th scope="col" width=150>Ônibus associado</th>
+            <th scope="col" style="width: 35%;">Descrição OS</th>
+            <th scope="col">Sistema</th>
+            <th scope="col">Responsável</th>
+            <th scope="col">Satus</th>
+            <th scope="col"></th>
+    
+    
+          </tr>
+        </thead>
+        <tbody id="myTable">
+          <tr>
+  
+          <%  newListItems.forEach(function(item) { %>
+       
+
+            <form method="POST" action="/OSedit"> 
+              <tr>
+                <th>
+               
+                    <%=item.IDos + ""%>   
+                  
+                </th>
+                
+                <th>
+                 
+                    <%=item.ID + ""%>   
+                   
+                </th> 
+                <th>
+                
+                    <%=item.descricao + ""%>   
+              
+                </th>
+                <th>
+               
+                    <%=item.sistema + ""%>   
+             
+                </th>
+                <th style= "word-wrap: break-word;">
+         
+                 <%=item.responsavel + ""%>   
+              
+              </th>
+              <th style= "word-wrap: break-word;">
+                
+                     <%=item.status + ""%>   
+                    
+                  </th>
+                <!--colocar for dentro do for: for(i=0;i<OS.length;i++) {
+                  item.OS[i].IDos%;
+               }-->
+               <th><button type="submit" value ="<%=item._id%>"name="editButton" class="btn btn-success" >Editar</button></th>
+
+                <!--<th><button type="submit" value ="<%=item._id%>"name="deleteButton" class="btn btn-danger">Apagar</button></th> -->
+                
+
+              
+              </tr>
+            </form>
+          
+
+           <% }) %>
+  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+      <!-- Bootstrap core JavaScript
+        ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+      <script src="../../dist/js/bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    </body>
+    
+    
+    </html>
+    
